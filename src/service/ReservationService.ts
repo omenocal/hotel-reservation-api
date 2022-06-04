@@ -31,4 +31,17 @@ export default class ReservationService {
 
     return result.Item as Reservation;
   }
+
+  async deleteReservation(reservationId: Key): Promise<String> {
+    const deleteParams = {
+      TableName: this.Tablename,
+      Key: reservationId,
+    };
+
+    console.log('deleteParams', deleteParams);
+
+    await this.docClient.delete(deleteParams).promise();
+
+    return 'OK';
+  }
 }
