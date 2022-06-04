@@ -2,5 +2,5 @@
   "headers": {
     "Content-Type": "application/json"
   },
-  "body": "{\"id\": \"abc123\"}"
+  "body": "{\"reservationId\": \"abc123\"}"
 }

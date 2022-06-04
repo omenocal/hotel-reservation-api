@@ -10,11 +10,11 @@ const createReservation = async (
   event: APIGatewayProxyEvent,
 ): Promise<APIGatewayProxyResult> => {
   try {
-    const id = v4();
+    const reservationId = v4();
     const body:any = event.body;
 
     const item: Reservation = {
-      reservationId: id,
+      reservationId,
       roomId: body.roomId,
       clientId: body.clientId,
       startDate: body.startDate,
@@ -26,7 +26,7 @@ const createReservation = async (
 
     console.log('result', result);
 
-    return formatJSONResponse({ id });
+    return formatJSONResponse({ reservationId });
   } catch (e) {
     const data = {
       status: 500,
