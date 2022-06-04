@@ -1,4 +1,4 @@
-import { DocumentClient, Key } from "aws-sdk/clients/dynamodb";
+import { DocumentClient, Key, UpdateItemInput } from "aws-sdk/clients/dynamodb";
 import Reservation from "../model/Reservation";
 
 export default class ReservationService {
@@ -30,6 +30,39 @@ export default class ReservationService {
     const result = await this.docClient.get(getParams).promise();
 
     return result.Item as Reservation;
+  }
+
+  async updateReservation(reservation: Reservation): Promise<String> {
+    const itemKey: any = reservation.reservationId;
+    const validAttributes = [
+      "roomId",
+      "startDate",
+      "endDate",
+    ];
+
+    const updateParams: UpdateItemInput = {
+      TableName: this.Tablename,
+      Key: itemKey,
+    };
+
+    const updateExpressionArray = [];
+
+    validAttributes.forEach((x) => {
+      if (reservation[x]) {
+        updateExpressionArray.push(`set #${x} = :${x}`);
+
+        updateParams.ExpressionAttributeNames[`#${x}`] = x;
+        updateParams.ExpressionAttributeValues[`:${x}`] = reservation[x];
+      }
+    });
+
+    updateParams.UpdateExpression = updateExpressionArray.join(', ');
+
+    console.log('updateParams', updateParams);
+
+    await this.docClient.update(updateParams).promise();
+
+    return reservation.reservationId;
   }
 
   async deleteReservation(reservationId: Key): Promise<String> {

@@ -2,6 +2,7 @@ import type { AWS } from '@serverless/typescript';
 import {
   createReservation,
   getReservation,
+  updateReservation,
   deleteReservation,
 } from '@functions/reservation';
 
@@ -37,7 +38,7 @@ const serverlessConfiguration: AWS = {
     },
   },
   // import the function via paths
-  functions: { createReservation, getReservation, deleteReservation },
+  functions: { createReservation, getReservation, updateReservation, deleteReservation },
   package: { individually: true },
   custom:{
     esbuild: {
