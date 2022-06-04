@@ -1,5 +1,5 @@
 import type { AWS } from '@serverless/typescript';
-import { createReservation } from '@functions/reservation';
+import { createReservation, getReservation } from '@functions/reservation';
 
 const serverlessConfiguration: AWS = {
   service: 'hotel-reservation-api',
@@ -33,7 +33,7 @@ const serverlessConfiguration: AWS = {
     },
   },
   // import the function via paths
-  functions: { createReservation },
+  functions: { createReservation, getReservation },
   package: { individually: true },
   custom:{
     esbuild: {
