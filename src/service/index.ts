@@ -1,4 +1,4 @@
-import dynamoDBClient from "../model";
+import { dynamoDBClient } from "../model";
 import ReservationService from "./ReservationService"
 
 const reservationService = new ReservationService(dynamoDBClient());

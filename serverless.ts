@@ -1,7 +1,8 @@
 import type { AWS } from '@serverless/typescript';
 import { createReservation } from '@functions/reservation';
+
 const serverlessConfiguration: AWS = {
-  service: 'aws-serverless-typescript-api',
+  service: 'hotel-reservation-api',
   frameworkVersion: '3',
   plugins: ['serverless-esbuild', 'serverless-offline', 'serverless-dynamodb-local'],
   provider: {
@@ -26,7 +27,7 @@ const serverlessConfiguration: AWS = {
             "dynamodb:UpdateItem",
             "dynamodb:DeleteItem",
           ],
-          Resource: "arn:aws:dynamodb:us-west-2:*:table/ReservationTable",
+          Resource: "arn:aws:dynamodb:us-east-1:*:table/ReservationTable",
         }],
       },
     },
@@ -47,7 +48,7 @@ const serverlessConfiguration: AWS = {
     },
     dynamodb:{
       start:{
-        port: 5000,
+        port: 3000,
         inMemory: true,
         migrate: true,
       },

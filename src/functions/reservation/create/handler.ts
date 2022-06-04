@@ -22,14 +22,18 @@ const createReservation = async (
       createdAt: new Date().toISOString(),
     };
 
-    await reservationService.createReservation(item);
+    const result = await reservationService.createReservation(item);
+
+    console.log('result', result);
 
     return formatJSONResponse({ id });
   } catch (e) {
-    return formatJSONResponse({
-        status: 500,
-        message: e
-    });
+    const data = {
+      status: 500,
+      message: e
+    };
+
+    return formatJSONResponse(data);
   }
 };
 

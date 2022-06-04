@@ -12,6 +12,8 @@ export default class ReservationService {
       Item: reservation,
     };
 
+    console.log('putParams', putParams);
+
     await this.docClient.put(putParams).promise();
 
     return reservation;
