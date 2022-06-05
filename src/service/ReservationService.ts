@@ -6,7 +6,7 @@ export default class ReservationService {
 
   constructor(private docClient: DocumentClient) { }
 
-  async createReservation(reservation: Reservation): Promise<Reservation> {
+  async createReservation(reservation: Reservation): Promise<String> {
     const putParams = {
       TableName: this.tableName,
       Item: reservation,
@@ -16,7 +16,7 @@ export default class ReservationService {
 
     await this.docClient.put(putParams).promise();
 
-    return reservation;
+    return reservation.reservationId;
   }
 
   async getReservation(reservationId: Key): Promise<Reservation> {
@@ -55,14 +55,14 @@ export default class ReservationService {
 
     validAttributes.forEach((x) => {
       if (reservation[x]) {
-        updateExpressionArray.push(`set #${x} = :${x}`);
+        updateExpressionArray.push(`#${x} = :${x}`);
 
         updateParams.ExpressionAttributeNames[`#${x}`] = x;
         updateParams.ExpressionAttributeValues[`:${x}`] = reservation[x];
       }
     });
 
-    updateParams.UpdateExpression = updateExpressionArray.join(', ');
+    updateParams.UpdateExpression = `set ${updateExpressionArray.join(', ')}`;
 
     console.log('updateParams', updateParams);
 
