@@ -3,7 +3,7 @@ import { formatJSONResponse } from '@libs/api-gateway';
 import { middyfy } from '@libs/lambda';
 
 import Reservation from "../../../model/reservation";
-import reservationService from '../../../service'
+import reservationService from '../../../service';
 
 const updateReservation = async (
   event: APIGatewayProxyEvent,

@@ -2,13 +2,13 @@ import { DocumentClient, Key, UpdateItemInput } from "aws-sdk/clients/dynamodb";
 import Reservation from "../model/Reservation";
 
 export default class ReservationService {
-  private Tablename: string = "ReservationTable";
+  private tableName: string = "ReservationTable";
 
   constructor(private docClient: DocumentClient) { }
 
   async createReservation(reservation: Reservation): Promise<Reservation> {
     const putParams = {
-      TableName: this.Tablename,
+      TableName: this.tableName,
       Item: reservation,
     };
 
@@ -21,7 +21,7 @@ export default class ReservationService {
 
   async getReservation(reservationId: Key): Promise<Reservation> {
     const getParams = {
-      TableName: this.Tablename,
+      TableName: this.tableName,
       Key: reservationId,
     };
 
@@ -41,7 +41,7 @@ export default class ReservationService {
     ];
 
     const updateParams: UpdateItemInput = {
-      TableName: this.Tablename,
+      TableName: this.tableName,
       Key: itemKey,
     };
 
@@ -67,7 +67,7 @@ export default class ReservationService {
 
   async deleteReservation(reservationId: Key): Promise<String> {
     const deleteParams = {
-      TableName: this.Tablename,
+      TableName: this.tableName,
       Key: reservationId,
     };
 
