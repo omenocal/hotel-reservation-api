@@ -147,6 +147,7 @@ resources:
 plugins:
   - serverless-dynamodb-local
   - serverless-esbuild
+  - serverless-iam-roles-per-function
   - serverless-offline
   - serverless-prune-plugin
   - serverless-stack-termination-protection
