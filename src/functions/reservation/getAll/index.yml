@@ -1,0 +1,15 @@
+GetAllReservations:
+  name: hotel-reservation-api-getAllReservations-${self:custom.myStage}
+  handler: src/functions/reservation/getAll/handler.main
+  description: Get All Reservations ${self:custom.upperStage.${self:custom.myStage}}
+  memorySize: ${self:custom.lambdaMemorySize.${self:custom.myStage}}
+  timeout: 7
+  iamRoleStatements:
+    - Effect: 'Allow'
+      Action:
+        - dynamodb:ScanItem
+      Resource: !GetAtt TableReservations.Arn
+  events:
+    - httpApi:
+        path: /reservation/getAll
+        method: get

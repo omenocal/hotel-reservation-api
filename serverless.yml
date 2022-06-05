@@ -71,6 +71,7 @@ functions:
   CreateReservation: ${file(src/functions/reservation/create/index.yml):CreateReservation}
   DeleteReservation: ${file(src/functions/reservation/delete/index.yml):DeleteReservation}
   GetReservation: ${file(src/functions/reservation/get/index.yml):GetReservation}
+  GetAllReservations: ${file(src/functions/reservation/getAll/index.yml):GetAllReservations}
   UpdateReservation: ${file(src/functions/reservation/update/index.yml):UpdateReservation}
 
 # Custom resources
