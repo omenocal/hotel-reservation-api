@@ -1,5 +1,5 @@
 service: hotel-reservation-api
-frameworkVersion: 3
+frameworkVersion: '3'
 
 custom:
   apiGatewayQuota:
@@ -53,16 +53,6 @@ provider:
       throttle:
         burstLimit: 200
         rateLimit: 100
-
-  iamRoleStatements:
-    - Effect: "Allow"
-      Action:
-        - dynamodb:GetItem
-        - dynamodb:PutItem
-        - dynamodb:UpdateItem
-        - dynamodb:DeleteItem
-      Resource: !GetAtt TableReservations.Arn
-
   environment:
     STAGE: ${self:custom.myStage}
 
@@ -81,7 +71,7 @@ functions:
     memorySize: ${self:custom.lambdaMemorySize.${self:custom.myStage}}
     timeout: 7
     iamRoleStatements:
-      - Effect: "Allow"
+      - Effect: 'Allow'
         Action:
           - dynamodb:PutItem
         Resource: !GetAtt TableReservations.Arn
@@ -97,7 +87,7 @@ functions:
     memorySize: ${self:custom.lambdaMemorySize.${self:custom.myStage}}
     timeout: 7
     iamRoleStatements:
-      - Effect: "Allow"
+      - Effect: 'Allow'
         Action:
           - dynamodb:DeleteItem
         Resource: !GetAtt TableReservations.Arn
@@ -113,7 +103,7 @@ functions:
     memorySize: ${self:custom.lambdaMemorySize.${self:custom.myStage}}
     timeout: 7
     iamRoleStatements:
-      - Effect: "Allow"
+      - Effect: 'Allow'
         Action:
           - dynamodb:GetItem
         Resource: !GetAtt TableReservations.Arn
@@ -129,7 +119,7 @@ functions:
     memorySize: ${self:custom.lambdaMemorySize.${self:custom.myStage}}
     timeout: 7
     iamRoleStatements:
-      - Effect: "Allow"
+      - Effect: 'Allow'
         Action:
           - dynamodb:UpdateItem
         Resource: !GetAtt TableReservations.Arn
