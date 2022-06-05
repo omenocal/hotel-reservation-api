@@ -42,7 +42,11 @@ export default class ReservationService {
 
     const updateParams: UpdateItemInput = {
       TableName: this.tableName,
-      Key: itemKey,
+      Key: {
+        reservationId: itemKey,
+      },
+      ExpressionAttributeNames: {},
+      ExpressionAttributeValues: {},
     };
 
     const updateExpressionArray = [];
