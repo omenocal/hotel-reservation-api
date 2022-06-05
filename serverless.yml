@@ -54,6 +54,7 @@ provider:
         burstLimit: 200
         rateLimit: 100
   environment:
+    RESERVATION_TABLE: hotel-reservation-api-${self:custom.myStage}
     STAGE: ${self:custom.myStage}
 
 package:

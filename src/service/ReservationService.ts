@@ -2,7 +2,7 @@ import { DocumentClient, Key, UpdateItemInput } from "aws-sdk/clients/dynamodb";
 import Reservation from "../model/Reservation";
 
 export default class ReservationService {
-  private tableName: string = "ReservationTable";
+  private tableName: string = process.env.RESERVATION_TABLE;
 
   constructor(private docClient: DocumentClient) { }
 
