@@ -22,7 +22,9 @@ export default class ReservationService {
   async getReservation(reservationId: Key): Promise<Reservation> {
     const getParams = {
       TableName: this.tableName,
-      Key: reservationId,
+      Key:{
+        reservationId,
+      },
     };
 
     console.log('getParams', getParams);
@@ -72,7 +74,9 @@ export default class ReservationService {
   async deleteReservation(reservationId: Key): Promise<String> {
     const deleteParams = {
       TableName: this.tableName,
-      Key: reservationId,
+      Key: {
+        reservationId,
+      },
     };
 
     console.log('deleteParams', deleteParams);
