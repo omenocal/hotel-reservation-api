@@ -27,6 +27,8 @@
     "serverless-dynamodb-local": "^0.2.40",
     "serverless-esbuild": "^1.30.0",
     "serverless-offline": "^8.8.0",
+    "serverless-prune-plugin": "^2.0.1",
+    "serverless-stack-termination-protection": "^2.0.2",
     "ts-node": "^10.8.1",
     "tsconfig-paths": "^4.0.0",
     "tslint": "^6.1.3",
