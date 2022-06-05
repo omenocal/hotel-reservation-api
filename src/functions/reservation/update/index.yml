@@ -1,0 +1,15 @@
+UpdateReservation:
+  name: hotel-reservation-api-updateReservation-${self:custom.myStage}
+  handler: src/functions/reservation/update/handler.main
+  description: Update Reservation ${self:custom.upperStage.${self:custom.myStage}}
+  memorySize: ${self:custom.lambdaMemorySize.${self:custom.myStage}}
+  timeout: 7
+  iamRoleStatements:
+    - Effect: 'Allow'
+      Action:
+        - dynamodb:UpdateItem
+      Resource: !GetAtt TableReservations.Arn
+  events:
+    - httpApi:
+        path: /reservation/{reservationId}
+        method: patch

@@ -1,0 +1,15 @@
+CreateReservation:
+  name: hotel-reservation-api-createReservation-${self:custom.myStage}
+  handler: src/functions/reservation/create/handler.main
+  description: Create Reservation ${self:custom.upperStage.${self:custom.myStage}}
+  memorySize: ${self:custom.lambdaMemorySize.${self:custom.myStage}}
+  timeout: 7
+  iamRoleStatements:
+    - Effect: 'Allow'
+      Action:
+        - dynamodb:PutItem
+      Resource: !GetAtt TableReservations.Arn
+  events:
+    - httpApi:
+        path: /reservation
+        method: post

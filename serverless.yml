@@ -65,69 +65,10 @@ package:
     - '../package.json'
 
 functions:
-  CreateReservation:
-    name: hotel-reservation-api-createReservation-${self:custom.myStage}
-    handler: src/functions/reservation/create/handler.main
-    description: Create Reservation ${self:custom.upperStage.${self:custom.myStage}}
-    memorySize: ${self:custom.lambdaMemorySize.${self:custom.myStage}}
-    timeout: 7
-    iamRoleStatements:
-      - Effect: 'Allow'
-        Action:
-          - dynamodb:PutItem
-        Resource: !GetAtt TableReservations.Arn
-    events:
-      - httpApi:
-          path: /reservation
-          method: post
-
-  DeleteReservation:
-    name: hotel-reservation-api-deleteReservation-${self:custom.myStage}
-    handler: src/functions/reservation/delete/handler.main
-    description: Delete Reservation ${self:custom.upperStage.${self:custom.myStage}}
-    memorySize: ${self:custom.lambdaMemorySize.${self:custom.myStage}}
-    timeout: 7
-    iamRoleStatements:
-      - Effect: 'Allow'
-        Action:
-          - dynamodb:DeleteItem
-        Resource: !GetAtt TableReservations.Arn
-    events:
-      - httpApi:
-          path: /reservation/{reservationId}
-          method: delete
-
-  GetReservation:
-    name: hotel-reservation-api-getReservation-${self:custom.myStage}
-    handler: src/functions/reservation/get/handler.main
-    description: Get Reservation ${self:custom.upperStage.${self:custom.myStage}}
-    memorySize: ${self:custom.lambdaMemorySize.${self:custom.myStage}}
-    timeout: 7
-    iamRoleStatements:
-      - Effect: 'Allow'
-        Action:
-          - dynamodb:GetItem
-        Resource: !GetAtt TableReservations.Arn
-    events:
-      - httpApi:
-          path: /reservation/{reservationId}
-          method: get
-
-  UpdateReservation:
-    name: hotel-reservation-api-updateReservation-${self:custom.myStage}
-    handler: src/functions/reservation/update/handler.main
-    description: Update Reservation ${self:custom.upperStage.${self:custom.myStage}}
-    memorySize: ${self:custom.lambdaMemorySize.${self:custom.myStage}}
-    timeout: 7
-    iamRoleStatements:
-      - Effect: 'Allow'
-        Action:
-          - dynamodb:UpdateItem
-        Resource: !GetAtt TableReservations.Arn
-    events:
-      - httpApi:
-          path: /reservation/{reservationId}
-          method: patch
+  CreateReservation: ${file(src/functions/reservation/create/index.yml):CreateReservation}
+  DeleteReservation: ${file(src/functions/reservation/delete/index.yml):DeleteReservation}
+  GetReservation: ${file(src/functions/reservation/get/index.yml):GetReservation}
+  UpdateReservation: ${file(src/functions/reservation/update/index.yml):UpdateReservation}
 
 resources:
   Resources:

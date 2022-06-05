@@ -1,0 +1,15 @@
+DeleteReservation:
+  name: hotel-reservation-api-deleteReservation-${self:custom.myStage}
+  handler: src/functions/reservation/delete/handler.main
+  description: Delete Reservation ${self:custom.upperStage.${self:custom.myStage}}
+  memorySize: ${self:custom.lambdaMemorySize.${self:custom.myStage}}
+  timeout: 7
+  iamRoleStatements:
+    - Effect: 'Allow'
+      Action:
+        - dynamodb:DeleteItem
+      Resource: !GetAtt TableReservations.Arn
+  events:
+    - httpApi:
+        path: /reservation/{reservationId}
+        method: delete
