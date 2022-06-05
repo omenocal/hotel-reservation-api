@@ -30,7 +30,7 @@ const createReservation = async (
   } catch (e) {
     const data = {
       status: 500,
-      message: e
+      message: e,
     };
 
     return formatJSONResponse(data);

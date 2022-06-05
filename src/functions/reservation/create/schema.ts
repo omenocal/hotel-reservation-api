@@ -6,5 +6,5 @@ export default {
     startDate: { type: 'string' },
     endDate: { type: 'string' },
   },
-  required: ['roomId', 'clientId', 'startDate', 'endDate']
+  required: ['roomId', 'clientId', 'startDate', 'endDate'],
 } as const;

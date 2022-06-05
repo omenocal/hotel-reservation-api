@@ -7,5 +7,5 @@ export default {
     startDate: { type: 'string' },
     endDate: { type: 'string' },
   },
-  required: ['reservationId']
+  required: ['reservationId'],
 } as const;

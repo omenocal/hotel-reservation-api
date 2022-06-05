@@ -22,7 +22,7 @@ const deleteReservation = async (
 
     const data = {
       status: 500,
-      message: e
+      message: e,
     };
 
     return formatJSONResponse(data);
