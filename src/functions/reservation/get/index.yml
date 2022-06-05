@@ -1,0 +1,15 @@
+GetReservation:
+  name: hotel-reservation-api-getReservation-${self:custom.myStage}
+  handler: src/functions/reservation/get/handler.main
+  description: Get Reservation ${self:custom.upperStage.${self:custom.myStage}}
+  memorySize: ${self:custom.lambdaMemorySize.${self:custom.myStage}}
+  timeout: 7
+  iamRoleStatements:
+    - Effect: 'Allow'
+      Action:
+        - dynamodb:GetItem
+      Resource: !GetAtt TableReservations.Arn
+  events:
+    - httpApi:
+        path: /reservation/{reservationId}
+        method: get

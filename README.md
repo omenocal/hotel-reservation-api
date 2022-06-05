@@ -96,3 +96,22 @@ The project code base is mainly located within the `src` folder. This folder is 
 ### Advanced usage
 
 Any tsconfig.json can be used, but if you do, set the environment variable `TS_NODE_CONFIG` for building the application, eg `TS_NODE_CONFIG=./tsconfig.app.json npx serverless webpack`
+
+### Deployment
+
+In this example we use GitHub Actions CI/CD pipeline to trigger deployment for 3 different environments: DEV, STAGING and PROD. Here are some screenshots of the configuration of our environments in the settings repository.
+
+![GitHub Environments](https://github.com/omenocal/hotel-reservation-api/blob/dev/media/images/cd1.png?raw=true)
+
+Each environment has 2 environment variables:
+
+- AWS_ACCESS_KEY_ID
+- AWS_SECRET_ACCESS_KEY
+
+![Environment Configuration](https://github.com/omenocal/hotel-reservation-api/blob/dev/media/images/cd2.png?raw=true)
+
+The repository has 3 workflows to deploy each environment.
+![Workflows](https://github.com/omenocal/hotel-reservation-api/blob/dev/media/images/cd3.png?raw=true)
+
+After the deployment succeeds, a green mark is added to the commit label
+![Deployment](https://github.com/omenocal/hotel-reservation-api/blob/dev/media/images/cd4.png?raw=true)
