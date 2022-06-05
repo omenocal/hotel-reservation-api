@@ -2,13 +2,13 @@ import { DocumentClient, Key, UpdateItemInput } from "aws-sdk/clients/dynamodb";
 import Reservation from "../model/Reservation";
 
 export default class ReservationService {
-  private Tablename: string = "ReservationTable";
+  private tableName: string = process.env.RESERVATION_TABLE;
 
   constructor(private docClient: DocumentClient) { }
 
-  async createReservation(reservation: Reservation): Promise<Reservation> {
+  async createReservation(reservation: Reservation): Promise<String> {
     const putParams = {
-      TableName: this.Tablename,
+      TableName: this.tableName,
       Item: reservation,
     };
 
@@ -16,13 +16,15 @@ export default class ReservationService {
 
     await this.docClient.put(putParams).promise();
 
-    return reservation;
+    return reservation.reservationId;
   }
 
   async getReservation(reservationId: Key): Promise<Reservation> {
     const getParams = {
-      TableName: this.Tablename,
-      Key: reservationId,
+      TableName: this.tableName,
+      Key:{
+        reservationId,
+      },
     };
 
     console.log('getParams', getParams);
@@ -41,22 +43,26 @@ export default class ReservationService {
     ];
 
     const updateParams: UpdateItemInput = {
-      TableName: this.Tablename,
-      Key: itemKey,
+      TableName: this.tableName,
+      Key: {
+        reservationId: itemKey,
+      },
+      ExpressionAttributeNames: {},
+      ExpressionAttributeValues: {},
     };
 
     const updateExpressionArray = [];
 
     validAttributes.forEach((x) => {
       if (reservation[x]) {
-        updateExpressionArray.push(`set #${x} = :${x}`);
+        updateExpressionArray.push(`#${x} = :${x}`);
 
         updateParams.ExpressionAttributeNames[`#${x}`] = x;
         updateParams.ExpressionAttributeValues[`:${x}`] = reservation[x];
       }
     });
 
-    updateParams.UpdateExpression = updateExpressionArray.join(', ');
+    updateParams.UpdateExpression = `set ${updateExpressionArray.join(', ')}`;
 
     console.log('updateParams', updateParams);
 
@@ -67,8 +73,10 @@ export default class ReservationService {
 
   async deleteReservation(reservationId: Key): Promise<String> {
     const deleteParams = {
-      TableName: this.Tablename,
-      Key: reservationId,
+      TableName: this.tableName,
+      Key: {
+        reservationId,
+      },
     };
 
     console.log('deleteParams', deleteParams);

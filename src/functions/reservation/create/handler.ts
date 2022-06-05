@@ -4,7 +4,7 @@ import { middyfy } from '@libs/lambda';
 import { v4 } from "uuid";
 
 import Reservation from "../../../model/reservation";
-import reservationService from '../../../service'
+import reservationService from '../../../service';
 
 const createReservation = async (
   event: APIGatewayProxyEvent,
@@ -30,7 +30,7 @@ const createReservation = async (
   } catch (e) {
     const data = {
       status: 500,
-      message: e
+      message: e,
     };
 
     return formatJSONResponse(data);

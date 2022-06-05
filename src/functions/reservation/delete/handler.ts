@@ -2,7 +2,7 @@ import { APIGatewayProxyEvent, APIGatewayProxyResult } from "aws-lambda";
 import { formatJSONResponse } from '@libs/api-gateway';
 import { middyfy } from '@libs/lambda';
 
-import reservationService from '../../../service'
+import reservationService from '../../../service';
 
 const deleteReservation = async (
   event: APIGatewayProxyEvent,
@@ -22,7 +22,7 @@ const deleteReservation = async (
 
     const data = {
       status: 500,
-      message: e
+      message: e,
     };
 
     return formatJSONResponse(data);

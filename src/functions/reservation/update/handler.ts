@@ -3,16 +3,17 @@ import { formatJSONResponse } from '@libs/api-gateway';
 import { middyfy } from '@libs/lambda';
 
 import Reservation from "../../../model/reservation";
-import reservationService from '../../../service'
+import reservationService from '../../../service';
 
 const updateReservation = async (
   event: APIGatewayProxyEvent,
 ): Promise<APIGatewayProxyResult> => {
   try {
     const body:any = event.body;
+    const pathParams:any = event.pathParameters;
 
     const item: Reservation = {
-      reservationId: body.reservationId,
+      reservationId: pathParams.reservationId,
       roomId: body.roomId,
       clientId: body.clientId,
       startDate: body.startDate,
@@ -28,7 +29,7 @@ const updateReservation = async (
   } catch (e) {
     const data = {
       status: 500,
-      message: e
+      message: e,
     };
 
     return formatJSONResponse(data);
