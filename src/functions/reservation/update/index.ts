@@ -8,7 +8,7 @@ export default {
     {
       http: {
         method: 'patch',
-        path: 'reservation',
+        path: 'reservation/{reservationId}',
         request: {
           schemas: {
             'application/json': schema,

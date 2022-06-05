@@ -10,9 +10,10 @@ const updateReservation = async (
 ): Promise<APIGatewayProxyResult> => {
   try {
     const body:any = event.body;
+    const pathParams:any = event.pathParameters;
 
     const item: Reservation = {
-      reservationId: body.reservationId,
+      reservationId: pathParams.reservationId,
       roomId: body.roomId,
       clientId: body.clientId,
       startDate: body.startDate,
