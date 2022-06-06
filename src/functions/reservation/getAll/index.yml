@@ -7,7 +7,7 @@ GetAllReservations:
   iamRoleStatements:
     - Effect: 'Allow'
       Action:
-        - dynamodb:ScanItem
+        - dynamodb:Scan
       Resource: !GetAtt TableReservations.Arn
   events:
     - httpApi:
