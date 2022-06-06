@@ -1,6 +1,10 @@
+# Service name
 service: hotel-reservation-api
+
+# Framework version constraint
 frameworkVersion: '3'
 
+# Custom parameters per environment
 custom:
   apiGatewayQuota:
     prod: 20000
@@ -26,12 +30,14 @@ custom:
     target: 'node16'
     platform: 'node'
     concurrency: 10
+# serverless-dynamodb-local configuration
   dynamodb:
     start:
       port: 3000
       inMemory: true
       migrate: true
     stages: dev
+# serverless-prune-plugin configuration
   prune:
     automatic: true
     number: 3
@@ -39,20 +45,19 @@ custom:
 provider:
   name: aws
   runtime: nodejs16.x
+
+  # Default stage
   stage: ${opt:stage, 'dev'}
+
+  # Default region
   region: us-east-1
+
+  # Project tags
   stackTags:
     Project: Hotel California
     ServiceName: Hotel California - Reservation
-  apiGateway:
-    usagePlan:
-      quota:
-        limit: ${self:custom.apiGatewayQuota.${self:custom.myStage}}
-        offset: 2
-        period: MONTH
-      throttle:
-        burstLimit: 200
-        rateLimit: 100
+
+  # Environment variables
   environment:
     RESERVATION_TABLE: hotel-reservation-api-${self:custom.myStage}
     STAGE: ${self:custom.myStage}
@@ -60,18 +65,19 @@ provider:
 package:
   individually: true
   excludeDevDependencies: true
-  include:
-    - '../node_modules/**'
-    - '../package.json'
 
+# Project Lambda functions
 functions:
   CreateReservation: ${file(src/functions/reservation/create/index.yml):CreateReservation}
   DeleteReservation: ${file(src/functions/reservation/delete/index.yml):DeleteReservation}
   GetReservation: ${file(src/functions/reservation/get/index.yml):GetReservation}
+  GetAllReservations: ${file(src/functions/reservation/getAll/index.yml):GetAllReservations}
   UpdateReservation: ${file(src/functions/reservation/update/index.yml):UpdateReservation}
 
+# Custom resources
 resources:
   Resources:
+    # DynamoDB reservation table
     TableReservations:
       Type: AWS::DynamoDB::Table
       Properties:
@@ -86,6 +92,7 @@ resources:
           ReadCapacityUnits: ${self:custom.dynamoDbCapacityUnits.${self:custom.myStage}}
           WriteCapacityUnits: ${self:custom.dynamoDbCapacityUnits.${self:custom.myStage}}
 
+# Plugins
 plugins:
   - serverless-dynamodb-local
   - serverless-esbuild
