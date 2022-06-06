@@ -10,12 +10,12 @@ jest.mock('aws-sdk', () => {
         return {
           delete: jest.fn(() => {
             return {
-              promise: jest.fn(() => true)
+              promise: jest.fn(() => true),
             };
-          })
+          }),
         };
-      })
-    }
+      }),
+    },
   };
 });
 

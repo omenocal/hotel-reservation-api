@@ -31,12 +31,12 @@ jest.mock('aws-sdk', () => {
                 return {
                   Items: mockResponse,
                 };
-              })
+              }),
             };
-          })
+          }),
         };
-      })
-    }
+      }),
+    },
   };
 });
 
