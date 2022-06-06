@@ -21,11 +21,11 @@ const updateReservation = async (
       createdAt: body.createdAt,
     };
 
-    const result = await reservationService.updateReservation(item);
+    const reservationId = await reservationService.updateReservation(item);
 
-    console.log('result', result);
+    console.log('reservationId', reservationId);
 
-    return formatJSONResponse({ result });
+    return formatJSONResponse({ reservationId });
   } catch (e) {
     const data = {
       status: 500,

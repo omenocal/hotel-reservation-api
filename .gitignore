@@ -8,3 +8,9 @@ jspm_packages
 
 # esbuild directories
 .esbuild
+
+# test directories
+coverage/
+
+# Environment
+.env

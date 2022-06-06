@@ -1,4 +1,4 @@
-import { DocumentClient, Key, UpdateItemInput } from "aws-sdk/clients/dynamodb";
+import { DocumentClient, Key } from "aws-sdk/clients/dynamodb";
 import Reservation from "../model/Reservation";
 
 export default class ReservationService {
@@ -7,7 +7,7 @@ export default class ReservationService {
   constructor(private docClient: DocumentClient) { }
 
   async createReservation(reservation: Reservation): Promise<String> {
-    const putParams = {
+    const putParams: DocumentClient.PutItemInput = {
       TableName: this.tableName,
       Item: reservation,
     };
@@ -20,7 +20,7 @@ export default class ReservationService {
   }
 
   async getReservation(reservationId: Key): Promise<Reservation> {
-    const getParams = {
+    const getParams: DocumentClient.GetItemInput = {
       TableName: this.tableName,
       Key:{
         reservationId,
@@ -34,6 +34,39 @@ export default class ReservationService {
     return result.Item as Reservation;
   }
 
+  async getAllReservations(
+    lastEvaluatedKey?: Key,
+    previousResults?: Reservation[],
+  ): Promise<Reservation[]> {
+    const scanParams: DocumentClient.ScanInput = {
+      TableName: this.tableName,
+    };
+
+    if (lastEvaluatedKey) {
+      scanParams.ExclusiveStartKey = lastEvaluatedKey;
+    }
+
+    console.log('scanParams', scanParams);
+
+    const data = await this.docClient.scan(scanParams).promise();
+
+    const dataOutput = { ...data };
+    delete dataOutput.Items;
+
+    console.log('dataOutput', dataOutput);
+
+    previousResults = previousResults || [];
+
+    const currentResults = data.Items as Reservation[] || [];
+    const totalResults = previousResults.concat(currentResults);
+
+    if (data.LastEvaluatedKey) {
+      return this.getAllReservations(data.LastEvaluatedKey, totalResults);
+    }
+
+    return totalResults;
+  }
+
   async updateReservation(reservation: Reservation): Promise<String> {
     const itemKey: any = reservation.reservationId;
     const validAttributes = [
@@ -42,7 +75,7 @@ export default class ReservationService {
       "endDate",
     ];
 
-    const updateParams: UpdateItemInput = {
+    const updateParams: DocumentClient.UpdateItemInput = {
       TableName: this.tableName,
       Key: {
         reservationId: itemKey,
@@ -72,7 +105,7 @@ export default class ReservationService {
   }
 
   async deleteReservation(reservationId: Key): Promise<String> {
-    const deleteParams = {
+    const deleteParams: DocumentClient.DeleteItemInput = {
       TableName: this.tableName,
       Key: {
         reservationId,
