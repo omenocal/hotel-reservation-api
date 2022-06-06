@@ -42,7 +42,7 @@ describe('Unit test for create handler', function () {
     const result = await main(event);
     const body = JSON.parse(result.body);
 
-    expect(result.statusCode).toEqual(200);
+    expect(result.statusCode).toEqual(2000);
     expect(body.reservationId).toEqual('testId');
     expect(uuidSpy).toHaveBeenCalledTimes(1);
   });
