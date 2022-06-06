@@ -7,6 +7,7 @@
     "lint": "tslint --config tslint.json --project tsconfig.json",
     "lint-fix": "tslint --fix --config tslint.json --project tsconfig.json --exclude \"**/*.json\"",
     "start": "IS_OFFLINE=true serverless offline start",
+    "integ-test": "jest --config=jest.config.integ.test.js",
     "test": "jest --config=jest.config.test.js"
   },
   "engines": {
