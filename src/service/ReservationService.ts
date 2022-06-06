@@ -55,6 +55,8 @@ export default class ReservationService {
 
     console.log('dataOutput', dataOutput);
 
+    previousResults = previousResults || [];
+
     const currentResults = data.Items as Reservation[] || [];
     const totalResults = previousResults.concat(currentResults);
 
